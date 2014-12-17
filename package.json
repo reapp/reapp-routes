@@ -1,0 +1,19 @@
+{
+  "name": "reapp-route-tree",
+  "version": "0.8.0",
+  "description": "helper for consistently requiring routes to filenames",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/reapp/reapp-route-tree"
+  },
+  "author": "Nate Wienert",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reapp/reapp-route-tree/issues"
+  },
+  "homepage": "https://github.com/reapp/reapp-route-tree"
+}
