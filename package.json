@@ -1,5 +1,5 @@
 {
-  "name": "reapp-route-tree",
+  "name": "reapp-routes",
   "version": "0.9.0",
   "description": "helper for consistently requiring routes to filenames",
   "main": "index.js",
