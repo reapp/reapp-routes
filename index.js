@@ -1,8 +1,12 @@
+require('reapp-object-assign');
+
 var defined = x => typeof x !== 'undefined';
 var capitalize = s => s[0].toUpperCase() + s.slice(1);
 var proper = name => name.split('-').map(capitalize).join('');
 var pick = (a, b) => typeof a !== 'undefined' ? a : b;
 
+// route is just an object with keys
+// name: string, path: string, isRoute: bool, children: array
 function route(name, ...children) {
   var path, props, isRoute = true;
 
