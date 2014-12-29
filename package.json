@@ -16,6 +16,9 @@
     "react-router": "*",
     "reapp-object-assign": "~1.0.0"
   },
+  "peerDependencies": {
+    "react": "~0.12"
+  },
   "bugs": {
     "url": "https://github.com/reapp/reapp-route-tree/issues"
   },

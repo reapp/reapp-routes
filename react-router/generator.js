@@ -1,5 +1,5 @@
 var React = require('react');
-var { route, routes } = require('./index');
+var { route, routes } = require('../index');
 var { Route, DefaultRoute } = require('react-router');
 
 function generator(route, requirer) {
