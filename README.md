@@ -1,6 +1,8 @@
 A small library for generating a tree of objects representing routes,
 as well as file paths.
 
+See the index.js for more in-code documentation.
+
 Can be used to reduce a lot of require boilerplate when you create
 and app with a consistent route -> directory mapping. Provides some options
 for times when the structure isn't so well mapped :).
