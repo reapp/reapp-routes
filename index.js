@@ -23,7 +23,7 @@ var proper = name => name.split('-').map(capitalize).join('');
 function route(name, ...children) {
   var path, props, isRoute = true;
 
-  if (!children)
+  if (!children || !children.length)
     return { name, isRoute };
 
   if (children[0].isRoute)
