@@ -14,8 +14,27 @@ Needs something like Webpack that can handle dynamic requires.
  - Add tests
  - Possibly remove `routes` just use `route`
 
-### Example
-With react-router and webpack:
+### Examples
+
+Using react-router helpers:
+
+```jsx
+var { route, routes } = require('reapp-routes/react-router/generator');
+
+module.exports = routes(require,
+  route('app', '/', { dir: '' },
+    route('kitchen', '/',
+      route('controls'),
+      route('modals'),
+      route('popovers'),
+      route('forms')
+    ),
+    route('viewer')
+  )
+);
+```
+
+Rolling your own:
 
 ```jsx
 var React = require('react');
