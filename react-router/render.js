@@ -23,14 +23,15 @@ function render(Handler, data) {
 }
 
 module.exports = {
-  renderSync(routes) {
+  sync(routes) {
     Router.run(routes, Router.HistoryLocation, (Handler, state) => {
-      fetchAllData(state.routes, state.params).then(data =>
-        render(Handler, data));
+      fetchAllData(state.routes, state.params).then(data => {
+        return render(Handler, data);
+      });
     });
   },
 
-  renderAsync(routes) {
+  async(routes) {
     Router.run(routes, Router.HistoryLocation, (Handler, state) => {
       render(Handler, state);
       fetchAllData(state.routes, state.params).then(data => {
