@@ -1,12 +1,10 @@
-// uses react router to run an app, with two options
-// renderAsync and renderSync
-//   - Sync waits for data then renders
-//   - Async renders, then fetches data and re-renders
+// uses react router to run an app, with two options (sync or async)
 
-var React  = require('react');
+var React = require('react');
 var Router = require('react-router');
 var { Promise } = require('bluebird');
 
+// look at statics key "fetchData" on the Handler component to get data
 function fetchAllData(routes, params) {
   var promises = routes
     .filter(route => route.handler.fetchData)
@@ -18,26 +16,53 @@ function fetchAllData(routes, params) {
   return Promise.props(promises);
 }
 
-function render(Handler, data) {
-  React.render(<Handler data={data} />, document.getElementById('app'));
+function renderToDocument(Handler, data) {
+  return React.render(<Handler data={data} />, document.getElementById('app'));
+}
+
+function renderToString(Handler, data) {
+  return React.renderToString(<Handler data={data} />);
 }
 
 module.exports = {
-  sync(routes) {
-    Router.run(routes, Router.HistoryLocation, (Handler, state) => {
+  // sync will fetch all data *before* returning
+  // ideal for running from server
+  sync(routes, opts, cb) {
+    var render = opts.render || renderToString;
+    var loc = opts.location || Router.HistoryLocation;
+
+    if (opts.debug)
+      console.log('rendering sync with opts', opts);
+
+    Router.run(routes, loc, (Handler, state) => {
       fetchAllData(state.routes, state.params).then(data => {
-        return render(Handler, data);
+        var out = render(Handler, data);
+
+        if (cb)
+          cb(out, data);
       });
     });
   },
 
-  async(routes) {
+  // async will render *first* without data, then fetch data and re-render
+  // ideal for running from the client
+  async(routes, opts, cb) {
+    var render = opts.render || renderToDocument;
+    var loc = opts.location || Router.HistoryLocation;
+
+    if (opts.debug)
+      console.log('rendering async with opts', opts);
+
     Router.run(routes, Router.HistoryLocation, (Handler, state) => {
       render(Handler, state);
       fetchAllData(state.routes, state.params).then(data => {
         // only re-render if we fetched data
-        if (Object.keys(data).length)
-          render(Handler, data);
+        if (Object.keys(data).length) {
+          var out = render(Handler, data);
+
+          if (cb)
+            cb(out, data);
+        }
       });
     });
   }
