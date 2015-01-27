@@ -1,3 +1,5 @@
+## reapp-routes
+
 A small library for generating a tree of objects representing routes,
 as well as file paths.
 
@@ -10,8 +12,8 @@ for times when the structure isn't so well mapped :).
 Needs something like Webpack that can handle dynamic requires.
 
 ### Todo
- - Document it a bit better
- - Add tests
+ - Document, tests
+ - Better separtion for use externally
  - Possibly remove `routes` just use `route`
 
 ### Examples

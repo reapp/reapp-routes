@@ -19,7 +19,7 @@
     "bluebird": "~2.6.0"
   },
   "peerDependencies": {
-    "react": "~0.12"
+    "react": "~0.12.2"
   },
   "bugs": {
     "url": "https://github.com/reapp/reapp-route-tree/issues"
