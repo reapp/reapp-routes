@@ -32,7 +32,7 @@ function route(name, ...children) {
   if (typeof children[0] === 'string')
     path = children.shift();
 
-  if (!children[0].isRoute)
+  if (children[0] && !children[0].isRoute)
     props = children.shift();
 
   if (!children.length)
