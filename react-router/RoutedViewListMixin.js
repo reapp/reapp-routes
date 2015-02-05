@@ -1,5 +1,5 @@
 var { State, Navigation } = require('react-router');
-var RouteHandler = require('react-router/modules/mixins/RouteHandler');
+var RouteHandlerMixin = require('react-router/modules/RouteHandlerMixin');
 
 // mixin for viewlists
 // works with react-router and gives some helper functions
@@ -8,7 +8,7 @@ var RouteHandler = require('react-router/modules/mixins/RouteHandler');
 module.exports = {
   mixins: [
     State,
-    RouteHandler,
+    RouteHandlerMixin,
     Navigation,
   ],
 
