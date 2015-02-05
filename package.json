@@ -15,7 +15,7 @@
   "dependencies": {
     "reapp-platform": "*",
     "reapp-object-assign": "~1.0.0",
-    "bluebird": "~2.6.0"
+    "bluebird": "~2.9.6"
   },
   "peerDependencies": {
     "react-router": "*",
