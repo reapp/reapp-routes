@@ -23,12 +23,14 @@ module.exports = {
     return this.numActiveRoutes() - this.getRouteDepth();
   },
 
-  routedSubRoute(props) {
-    return this.hasChildRoute() && (
-      this.getRouteHandler(
-        Object.assign({}, {key: this.subRouteKey()}, props)
-      )
-    );
+  childRouteHandler(props) {
+    if (!this.hasChildRoute())
+      return;
+
+    var childProps = Object.assign({}, {key: this.subRouteKey()}, props);
+    var RouteHandler = this.createChildRouteHandler(childProps);
+
+    return RouteHandler;
   },
 
   // todo: debug why this is called more than it should be
