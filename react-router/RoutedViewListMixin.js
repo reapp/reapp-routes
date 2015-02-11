@@ -36,7 +36,9 @@ module.exports = {
     if (i === 0 && this.numActiveRoutes() > this.getRouteDepth()) {
       var r = this.getRoutes().reverse();
       r.shift();
-      this.transitionTo(r[0].path);
+      setTimeout(() => {
+        this.transitionTo(r[0].path)
+      }, 60);
     }
   },
 
