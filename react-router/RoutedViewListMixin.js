@@ -12,10 +12,15 @@ module.exports = {
     Navigation,
   ],
 
-  routedViewListProps() {
+  routedViewListProps(props) {
     return {
       scrollToStep: this.scrollToStep(),
-      onViewEntered: this._handleViewEntered
+      onViewEntered: (i) => {
+        if (props && props.onViewEntered)
+          props.onViewEntered(i);
+
+        this._handleViewEntered(i);
+      }
     };
   },
 
