@@ -1,6 +1,6 @@
 {
   "name": "reapp-routes",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "description": "helper for consistently requiring routes to filenames",
   "main": "index.js",
   "scripts": {
