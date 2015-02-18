@@ -30,7 +30,7 @@ module.exports = {
 
   childRouteHandler(props) {
     if (!this.hasChildRoute())
-      return;
+      return null;
 
     var childProps = Object.assign({}, {key: this.subRouteKey()}, props);
     return this.getRouteHandler(childProps);

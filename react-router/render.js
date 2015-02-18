@@ -31,9 +31,6 @@ module.exports = {
     var render = opts.render || renderToString;
     var loc = opts.location || Router.HistoryLocation;
 
-    if (opts.debug)
-      console.log('rendering sync with opts', opts);
-
     Router.run(routes, loc, (Handler, state) => {
       fetchAllData(state.routes, state.params).then(data => {
         var out = render(Handler, data);
@@ -48,12 +45,15 @@ module.exports = {
   // ideal for running from the client
   async(routes, opts, cb) {
     var render = opts.render || renderToDocument;
-    var loc = opts.location || Router.HistoryLocation;
+    var loc = typeof opts.location === 'undefined' ?
+      Router.HistoryLocation :
+      opts.location;
 
-    if (opts.debug)
-      console.log('rendering async with opts', opts);
+    // cordova shouldn't use HistoryLocation
+    if (process.env.PLATFORM === 'ios')
+      loc = null;
 
-    Router.run(routes, Router.HistoryLocation, (Handler, state) => {
+    Router.run(routes, loc, (Handler, state) => {
       render(Handler, state);
       fetchAllData(state.routes, state.params).then(data => {
         // only re-render if we fetched data
