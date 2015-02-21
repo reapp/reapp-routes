@@ -4,7 +4,7 @@ A small library for generating a tree representing routes that also map to paths
 
 This does two things: saves code and enforces consistency.
 
-Before reapp-routes:
+**Before reapp-routes**
 
 ```js
 var App = require('./components/App');
@@ -18,7 +18,7 @@ module.exports =
   </Route>
 ```
 
-After:
+**With reapp-routes**
 
 ```js
 module.exports = routes(require,
