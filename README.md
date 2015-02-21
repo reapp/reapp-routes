@@ -6,7 +6,7 @@ This does two things: saves code and enforces consistency.
 
 Before reapp-routes:
 
-```
+```js
 var App = require('./components/App');
 var Sub = require('./components/app/Sub');
 var OtherSub = require('./components/app/OtherSub');
@@ -20,7 +20,7 @@ module.exports =
 
 After:
 
-```
+```js
 module.exports = routes(require,
   route('app',
     route('sub'),
@@ -40,7 +40,7 @@ It does require Webpack or a bundle system that handles dynamic requires.
 
 Using react-router helpers:
 
-```jsx
+```js
 var { route, routes } = require('reapp-routes/react-router/generator');
 
 module.exports = routes(require,
@@ -58,7 +58,7 @@ module.exports = routes(require,
 
 Rolling your own:
 
-```jsx
+```js
 var React = require('react');
 var { Route, DefaultRoute } = require('react-router');
 var { route, routes } = require('react-router-generator');
