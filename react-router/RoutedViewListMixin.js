@@ -38,12 +38,13 @@ module.exports = {
 
   // todo: debug why this is called more than it should be
   _handleViewEntered(i) {
+    // debugger
     if (i === 0 && this.numActiveRoutes() > this.getRouteDepth()) {
       var r = this.getRoutes().reverse();
       r.shift();
       setTimeout(() => {
         this.transitionTo(r[0].path)
-      }, 60);
+      });
     }
   },
 
