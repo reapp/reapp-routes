@@ -1,6 +1,6 @@
 var React = require('react');
-var { route, routes } = require('../index');
-var { Route, DefaultRoute } = require('react-router');
+var { route, routes, notFoundRoute, defaultRoute } = require('../index');
+var { NotFoundRoute, Route, DefaultRoute } = require('react-router');
 
 // this generator ties together react-router with reapp-routes
 
@@ -11,9 +11,17 @@ var { Route, DefaultRoute } = require('react-router');
 function generator(route, requirer) {
   route.handler = requirer(route.handlerPath);
 
-  return route.default ?
-    <DefaultRoute {...route} /> :
-    <Route {...route} />;
+  switch (route.type) {
+    case defaultRoute:
+      return <DefaultRoute {...route} />;
+    case notFoundRoute:
+      return <NotFoundRoute {...route} />;
+    default:
+      if (route.type) {
+        console.warn('Warning: Invalid route type passed, creating standard <Route />');
+      }
+      return <Route {...route} />;
+  }
 }
 
 module.exports = {

@@ -18,6 +18,10 @@ var pick = (a, b) => typeof a !== 'undefined' ? a : b;
 var capitalize = s => s[0].toUpperCase() + s.slice(1);
 var proper = name => name.split('-').map(capitalize).join('');
 
+// route types
+var defaultRoute = Symbol('defaultRoute');
+var notFoundRoute = Symbol('defaultRoute');
+
 // route is just an object with keys
 // name: string, path: string, isRoute: bool, children: array
 function route(name, ...children) {
@@ -96,9 +100,10 @@ function makeTree(route, parentsPath) {
   return {
     name: route.name,
     path: route.path,
+    type: route.type,
     handlerPath,
     children
   };
 }
 
-module.exports = { route, routes };
+module.exports = { route, routes, notFoundRoute, defaultRoute};
