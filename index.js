@@ -94,8 +94,7 @@ function makeTree(route, parentsPath) {
   var handlerPath = './' + parentsPath + proper(route.name);
 
   return {
-    name: route.name,
-    path: route.path,
+    ...route,
     handlerPath,
     children
   };
