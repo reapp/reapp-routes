@@ -1,5 +1,5 @@
 var { State, Navigation } = require('react-router');
-var RouteHandlerMixin = require('react-router/mixins/RouteHandler');
+var ParentRouteMixin = require('./ParentRouteMixin');
 
 // mixin for viewlists
 // works with react-router and gives some helper functions
@@ -8,7 +8,7 @@ var RouteHandlerMixin = require('react-router/mixins/RouteHandler');
 module.exports = {
   mixins: [
     State,
-    RouteHandlerMixin,
+    ParentRouteMixin,
     Navigation,
   ],
 
@@ -33,7 +33,7 @@ module.exports = {
       return null;
 
     var childProps = Object.assign({}, {key: this.subRouteKey()}, props);
-    return this.getRouteHandler(childProps);
+    return this.createChildRouteHandler(childProps);
   },
 
   // todo: debug why this is called more than it should be
