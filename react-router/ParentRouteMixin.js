@@ -12,7 +12,8 @@ module.exports = {
   },
 
   childContextTypes: {
-    routeDepth: PropTypes.number.isRequired
+    routeDepth: PropTypes.number.isRequired,
+    animations: PropTypes.object
   },
 
   getChildContext() {
@@ -43,7 +44,8 @@ module.exports = {
 
   createChildRouteHandler(props) {
     var route = this.context.router.getRouteAtDepth(this.getRouteDepth());
-    return route ? React.createElement(route.handler, assign({}, props || this.props, { ref: REF_NAME })) : null;
+    var el = route ? React.createElement(route.handler, assign({}, props || this.props, { ref: REF_NAME })) : null;
+    return el;
   }
 
 };

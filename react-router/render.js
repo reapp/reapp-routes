@@ -16,8 +16,42 @@ function fetchAllData(routes, params) {
   return Promise.props(promises);
 }
 
-function renderToDocument(Handler, data) {
-  return React.render(<Handler data={data} />, document.getElementById('app'));
+function renderToDocument(Handler, props, context) {
+  console.log(context);
+  var ContextHandler = ChildContextProviderFactory(context);
+
+  return React.withContext(context, () =>
+    React.render(
+      <ContextHandler componentProvider={() => <Handler {...props} />} />,
+      document.getElementById('app')
+    )
+  );
+}
+
+function ChildContextProviderFactory(context) {
+  var childContextTypes = {};
+  Object.keys(context).forEach(contextKey => {
+    childContextTypes[contextKey] = React.PropTypes.any.isRequired
+  });
+
+  console.log('child context types', childContextTypes, context)
+
+  return React.createClass({
+    displayName: 'ChildContextProvider',
+    childContextTypes,
+    propTypes: {
+      componentProvider: React.PropTypes.func.isRequired,
+      context: React.PropTypes.object.isRequired
+    },
+    getChildContext: function() {
+      return this.props.context;
+    },
+    render: function() {
+      // TODO simplify this "componentProvider hack" after React 0.14? See See https://github.com/facebook/react/issues/3392
+      var children = this.props.componentProvider();
+      return children;
+    }
+  });
 }
 
 function renderToString(Handler, data) {
@@ -33,7 +67,7 @@ module.exports = {
 
     Router.run(routes, loc, (Handler, state) => {
       fetchAllData(state.routes, state.params).then(data => {
-        var out = render(Handler, data);
+        var out = render(Handler, { data }, opts.context);
 
         if (cb)
           cb(out, data);
@@ -54,11 +88,11 @@ module.exports = {
       loc = null;
 
     Router.run(routes, loc, (Handler, state) => {
-      render(Handler, state);
+      render(Handler, { state }, opts.context);
       fetchAllData(state.routes, state.params).then(data => {
         // only re-render if we fetched data
         if (Object.keys(data).length) {
-          var out = render(Handler, data);
+          var out = render(Handler, { data }, opts.context);
 
           if (cb)
             cb(out, data);
