@@ -1,4 +1,3 @@
-var { Navigation } = require('react-router');
 var ParentRouteMixin = require('./ParentRouteMixin');
 
 // mixin for viewlists
@@ -7,8 +6,7 @@ var ParentRouteMixin = require('./ParentRouteMixin');
 
 module.exports = {
   mixins: [
-    ParentRouteMixin,
-    Navigation,
+    ParentRouteMixin
   ],
 
   routedViewListProps(props) {
@@ -41,7 +39,7 @@ module.exports = {
       var r = this.context.router.getCurrentRoutes().reverse();
       r.shift();
       setTimeout(() => {
-        this.transitionTo(r[0].path)
+        this.context.router.transitionTo(r[0].path)
       });
     }
   },
