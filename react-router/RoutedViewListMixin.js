@@ -26,11 +26,7 @@ module.exports = {
   },
 
   childRouteHandler(props) {
-    if (!this.hasChildRoute())
-      return null;
-
-    var childProps = Object.assign({}, {key: this.subRouteKey()}, props);
-    return this.createChildRouteHandler(childProps);
+    return this.createChildRouteHandler(props);
   },
 
   // todo: debug why this is called more than it should be
