@@ -1,4 +1,4 @@
-var { State, Navigation } = require('react-router');
+var { Navigation } = require('react-router');
 var ParentRouteMixin = require('./ParentRouteMixin');
 
 // mixin for viewlists
@@ -7,7 +7,6 @@ var ParentRouteMixin = require('./ParentRouteMixin');
 
 module.exports = {
   mixins: [
-    State,
     ParentRouteMixin,
     Navigation,
   ],
@@ -39,7 +38,7 @@ module.exports = {
   // todo: debug why this is called more than it should be
   _handleViewEntered(i) {
     if (i === 0 && this.numActiveRoutes() > this.getRouteDepth()) {
-      var r = this.getRoutes().reverse();
+      var r = this.context.router.getCurrentRoutes().reverse();
       r.shift();
       setTimeout(() => {
         this.transitionTo(r[0].path)
@@ -48,7 +47,7 @@ module.exports = {
   },
 
   numActiveRoutes() {
-    return this.getRoutes().length;
+    return this.context.router.getCurrentRoutes().length;
   },
 
   hasChildRoute() {
@@ -56,6 +55,7 @@ module.exports = {
   },
 
   subRouteKey() {
-    return this.getRoutes().reverse()[0].name + this.getParams().id;
+    return this.context.router.getCurrentRoutes().reverse()[0].name
+      + this.context.router.getCurrentParams().id;
   }
 };

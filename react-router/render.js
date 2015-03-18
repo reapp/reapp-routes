@@ -22,7 +22,10 @@ function renderToDocument(Handler, props, context) {
 
   return React.withContext(context, () =>
     React.render(
-      <ContextHandler componentProvider={() => <Handler {...props} />} />,
+      <ContextHandler
+        context={context}
+        componentProvider={() => <Handler {...props} />}
+      />,
       document.getElementById('app')
     )
   );
