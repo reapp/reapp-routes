@@ -14,7 +14,8 @@ function run(routes, opts, cb) {
     };
 }
 
-// add ParentRouteMixin
+// add mixins
 run.ParentRouteMixin = require('./ParentRouteMixin');
+run.RoutedViewListMixin = require('./RoutedViewListMixin');
 
 module.exports = run;
