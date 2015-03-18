@@ -17,42 +17,10 @@ function fetchAllData(routes, params) {
 }
 
 function renderToDocument(Handler, props, context) {
-  console.log(context);
-  var ContextHandler = ChildContextProviderFactory(context);
-
   return React.render(
-    <ContextHandler
-      context={context}
-      componentProvider={() => <Handler {...props} />}
-    />,
+    <Handler {...props} />,
     document.getElementById('app')
   );
-}
-
-function ChildContextProviderFactory(context) {
-  var childContextTypes = {};
-  Object.keys(context).forEach(contextKey => {
-    childContextTypes[contextKey] = React.PropTypes.any.isRequired
-  });
-
-  console.log('child context types', childContextTypes, context)
-
-  return React.createClass({
-    displayName: 'ChildContextProvider',
-    childContextTypes,
-    propTypes: {
-      componentProvider: React.PropTypes.func.isRequired,
-      context: React.PropTypes.object.isRequired
-    },
-    getChildContext: function() {
-      return this.props.context;
-    },
-    render: function() {
-      // TODO simplify this "componentProvider hack" after React 0.14? See See https://github.com/facebook/react/issues/3392
-      var children = this.props.componentProvider();
-      return children;
-    }
-  });
 }
 
 function renderToString(Handler, data) {
