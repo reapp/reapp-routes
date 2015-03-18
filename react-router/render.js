@@ -20,14 +20,12 @@ function renderToDocument(Handler, props, context) {
   console.log(context);
   var ContextHandler = ChildContextProviderFactory(context);
 
-  return React.withContext(context, () =>
-    React.render(
-      <ContextHandler
-        context={context}
-        componentProvider={() => <Handler {...props} />}
-      />,
-      document.getElementById('app')
-    )
+  return React.render(
+    <ContextHandler
+      context={context}
+      componentProvider={() => <Handler {...props} />}
+    />,
+    document.getElementById('app')
   );
 }
 
