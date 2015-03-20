@@ -1,19 +1,18 @@
 var React = require('react');
 var assign = require('react/lib/Object.assign');
-var PropTypes = require('react-router/modules/PropTypes');
 
 var REF_NAME = '__routeHandler__';
 
 module.exports = {
 
   contextTypes: {
-    routeDepth: PropTypes.number.isRequired,
-    router: PropTypes.router.isRequired
+    routeDepth: React.PropTypes.number.isRequired,
+    router: React.PropTypes.func.isRequired
   },
 
   childContextTypes: {
-    routeDepth: PropTypes.number.isRequired,
-    animations: PropTypes.object
+    routeDepth: React.PropTypes.number.isRequired,
+    animations: React.PropTypes.object
   },
 
   getChildContext() {
