@@ -11,7 +11,10 @@ function fetchAllData(routes, params) {
       return promises;
     }, {});
 
-  const resolveAllOnObject = Promise.props || Promise.all;
+  if (!Object.keys(promises).length)
+    return Promise.resolve({});
+
+  const resolveAllOnObject = Promise.props || Promise.all || function() {};
   return resolveAllOnObject(promises);
 }
 
