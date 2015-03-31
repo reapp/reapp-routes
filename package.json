@@ -4,7 +4,8 @@
   "description": "helper for consistently requiring routes to filenames",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel src --out-dir . --experimental",
+    "watch": "npm run build --watch"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,9 @@
   "bugs": {
     "url": "https://github.com/reapp/reapp-route-tree/issues"
   },
-  "homepage": "https://github.com/reapp/reapp-route-tree"
+  "homepage": "https://github.com/reapp/reapp-route-tree",
+  "devDependencies": {
+    "babel": "^4.7.16",
+    "babel-core": "^4.7.16"
+  }
 }
