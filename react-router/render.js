@@ -1,8 +1,6 @@
 // uses react router to run an app, with two options (sync or async)
-
 var React = require('react');
 var Router = require('react-router');
-var { Promise } = require('bluebird');
 
 // look at statics key "fetchData" on the Handler component to get data
 function fetchAllData(routes, params) {
@@ -13,7 +11,8 @@ function fetchAllData(routes, params) {
       return promises;
     }, {});
 
-  return Promise.props(promises);
+  const resolveAllOnObject = Promise.props || Promise.all;
+  return resolveAllOnObject(promises);
 }
 
 function renderToDocument(Handler, props, context) {
@@ -31,6 +30,7 @@ module.exports = {
   // sync will fetch all data *before* returning
   // ideal for running from server
   sync(routes, opts, cb) {
+    opts = opts || {};
     var render = opts.render || renderToString;
     var loc = opts.location || Router.HistoryLocation;
 
@@ -47,6 +47,7 @@ module.exports = {
   // async will render *first* without data, then fetch data and re-render
   // ideal for running from the client
   async(routes, opts, cb) {
+    opts = opts || {};
     var render = opts.render || renderToDocument;
     var loc = typeof opts.location === 'undefined' ?
       Router.HistoryLocation :

@@ -4,10 +4,7 @@ var ParentRouteMixin = require('./ParentRouteMixin');
 // works with react-router and gives some helper functions
 // to manage viewLists
 
-module.exports = {
-  mixins: [
-    ParentRouteMixin
-  ],
+module.exports = Object.assign({}, ParentRouteMixin, {
 
   routedViewListProps(props) {
     return {
@@ -52,4 +49,4 @@ module.exports = {
     return this.context.router.getCurrentRoutes().reverse()[0].name
       + this.context.router.getCurrentParams().id;
   }
-};
+});

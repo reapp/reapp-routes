@@ -11,8 +11,7 @@ module.exports = {
   },
 
   childContextTypes: {
-    routeDepth: React.PropTypes.number.isRequired,
-    animations: React.PropTypes.object
+    routeDepth: React.PropTypes.number.isRequired
   },
 
   getChildContext() {
