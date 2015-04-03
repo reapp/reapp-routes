@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "reapp-platform": "*",
-    "reapp-object-assign": "~1.0.0"
+    "reapp-object-assign": "^1.0.0"
   },
   "peerDependencies": {
     "react": "0.13.x",
@@ -26,7 +26,6 @@
   },
   "homepage": "https://github.com/reapp/reapp-route-tree",
   "devDependencies": {
-    "babel": "^4.7.16",
-    "babel-core": "^4.7.16"
+    "babel": "^5.0.0
   }
 }
