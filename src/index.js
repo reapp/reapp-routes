@@ -58,6 +58,12 @@ function routes(generator, opts, requirer, route) {
     route = requirer;
     requirer = opts;
     opts = { dir: 'components' };
+
+    // requirer optional :/
+    if (!route) {
+      route = requirer;
+      requirer = null;
+    }
   }
 
   _requirer = requirer;

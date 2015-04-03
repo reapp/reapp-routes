@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --stage=0",
-    "watch": "npm run build --watch"
+    "watch": "babel src --out-dir . --stage=0 --watch"
   },
   "repository": {
     "type": "git",
