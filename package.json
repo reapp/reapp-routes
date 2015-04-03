@@ -4,7 +4,7 @@
   "description": "helper for consistently requiring routes to filenames",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir . --experimental",
+    "build": "babel src --out-dir . --stage=0",
     "watch": "npm run build --watch"
   },
   "repository": {
@@ -26,6 +26,6 @@
   },
   "homepage": "https://github.com/reapp/reapp-route-tree",
   "devDependencies": {
-    "babel": "^5.0.0
+    "babel": "^5.0.0"
   }
 }
