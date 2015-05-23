@@ -57,7 +57,7 @@ module.exports = {
       opts.location;
 
     // cordova shouldn't use HistoryLocation
-    if (process.env.PLATFORM === 'ios')
+    if (process.env.PLATFORM === 'ios' || process.env.PLATFORM === 'android')
       loc = null;
 
     Router.run(routes, loc, (Handler, state) => {
