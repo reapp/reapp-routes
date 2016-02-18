@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "react": "0.14.x",
-    "reapp-platform": "aprihodko/reapp-platform#react-0.14",
+    "reapp-platform": "*",
     "react-router": "0.13.x",
     "reapp-object-assign": "^1.0.0"
   },
