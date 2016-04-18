@@ -15,8 +15,8 @@
   "license": "MIT",
   "dependencies": {
     "react": "0.14.x",
-    "reapp-platform": "*",
-    "react-router": "0.13.x",
+    "reapp-platform": "git+https://github.com/reapp/reapp-platform.git",
+    "react-router": "2.0.0",
     "reapp-object-assign": "^1.0.0"
   },
   "bugs": {

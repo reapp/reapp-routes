@@ -1,6 +1,7 @@
 // uses react router to run an app, with two options (sync or async)
-var React = require('react');
-var Router = require('react-router');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, hashHistory } from 'react-router';
 
 // look at statics key "fetchData" on the Handler component to get data
 function fetchAllData(routes, params) {
@@ -19,7 +20,7 @@ function fetchAllData(routes, params) {
 }
 
 function renderToDocument(Handler, props, context) {
-  return React.render(
+  return ReactDOM.render(
     <Handler {...props} />,
     document.getElementById('app')
   );
@@ -60,6 +61,8 @@ module.exports = {
     if (process.env.PLATFORM === 'ios' || process.env.PLATFORM === 'android')
       loc = null;
 
+    ReactDOM.render(<Router history={loc} routes={routes} />, document.getElementById('app'));
+
     Router.run(routes, loc, (Handler, state) => {
       render(Handler, { state }, opts.context);
       fetchAllData(state.routes, state.params).then(data => {
@@ -71,6 +74,9 @@ module.exports = {
             cb(out, data);
         }
       });
-    });
+  });
+
+
+
   }
 };
