@@ -93,11 +93,14 @@ function makeTree(route, parentsPath) {
   if (route.children)
     children = route.children.map(child => {
       var childSubDir = pick(route.dir, route.name);
+      if (childSubDir && childSubDir != route.name) childSubDir = childSubDir + '/' + route.name;
       var childParentsPath = parentsPath + (childSubDir ? childSubDir + '/' : '');
       return makeTree(child, childParentsPath);
     });
 
-  var handlerPath = './' + parentsPath + proper(route.name);
+  var currentPath = pick(route.dir, '');
+  if (currentPath) currentPath = currentPath + '/';
+  var handlerPath = './' + parentsPath + currentPath + proper(route.name);
 
   return {
     ...route,
