@@ -1,5 +1,7 @@
 // uses react router to run an app, with two options (sync or async)
 var React = require('react');
+var ReactDOM = require('react-dom');
+var ReactDOMServer = require('react-dom/server');
 var Router = require('react-router');
 
 // look at statics key "fetchData" on the Handler component to get data
@@ -19,14 +21,14 @@ function fetchAllData(routes, params) {
 }
 
 function renderToDocument(Handler, props, context) {
-  return React.render(
+  return ReactDOM.render(
     <Handler {...props} />,
     document.getElementById('app')
   );
 }
 
 function renderToString(Handler, data) {
-  return React.renderToString(<Handler data={data} />);
+  return ReactDOMServer.renderToString(<Handler data={data} />);
 }
 
 module.exports = {
