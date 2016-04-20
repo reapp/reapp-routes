@@ -10,7 +10,7 @@ var { Route, DefaultRoute } = require('react-router');
 
 function generator(route, requirer) {
   if (!route.handler) {
-    route.component = requirer(route.handlerPath);
+    route.handler = requirer(route.handlerPath);
   }
 
   if (route.default) {

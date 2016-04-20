@@ -7,9 +7,9 @@ import ReactDomServer from 'react-dom/server';
 // look at statics key "fetchData" on the Handler component to get data
 function fetchAllData(routes, params) {
   var promises = routes
-    .filter(route => route.component.fetchData)
+    .filter(route => route.handler.fetchData)
     .reduce((promises, route) => {
-      promises[route.name] = route.component.fetchData(params);
+      promises[route.name] = route.handler.fetchData(params);
       return promises;
     }, {});
 
@@ -20,9 +20,9 @@ function fetchAllData(routes, params) {
   return resolveAllOnObject(promises);
 }
 
-function renderToDocument(props) {
+function renderToDocument(Handler, props, context) {
   return ReactDOM.render(
-    <Router {...props} />,
+    <Handler {...props} />,
     document.getElementById('app')
   );
 }
@@ -62,20 +62,18 @@ module.exports = {
       loc = null;
     }
 
-    match(
-      {routes, history: browserHistory},
-      (error, redirectLocation, renderProps) => {
-        render(renderProps);
-        fetchAllData(renderProps.routes, renderProps.params).then((data) => {
-          if (Object.keys(data).length) {
-            var out = render(renderProps);
-            if (cb) {
-              cb(out, data);
-            }
+    Router.run(routes, loc, (Handler, state) => {
+      render(Handler, { state }, opts.context);
+      fetchAllData(state.routes, state.params).then(data => {
+        // only re-render if we fetched data
+        if (Object.keys(data).length) {
+          var out = render(Handler, { data }, opts.context);
+          if (cb) {
+            cb(out, data);
           }
-        });
-      }
-    );
+        }
+      });
+    });
 
   }
 };
