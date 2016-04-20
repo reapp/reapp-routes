@@ -1,14 +1,15 @@
 // uses react router to run an app, with two options (sync or async)
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, browserHistory } from 'react-router';
+import { Router, browserHistory, hashHistory, match, RouterContext } from 'react-router';
+import ReactDomServer from 'react-dom/server';
 
 // look at statics key "fetchData" on the Handler component to get data
 function fetchAllData(routes, params) {
   var promises = routes
-    .filter(route => route.handler.fetchData)
+    .filter(route => route.component.fetchData)
     .reduce((promises, route) => {
-      promises[route.name] = route.handler.fetchData(params);
+      promises[route.name] = route.component.fetchData(params);
       return promises;
     }, {});
 
@@ -19,9 +20,9 @@ function fetchAllData(routes, params) {
   return resolveAllOnObject(promises);
 }
 
-function renderToDocument(Handler, props, context) {
+function renderToDocument(props) {
   return ReactDOM.render(
-    <Handler {...props} />,
+    <Router {...props} />,
     document.getElementById('app')
   );
 }
@@ -29,6 +30,7 @@ function renderToDocument(Handler, props, context) {
 function renderToString(Handler, data) {
   return React.renderToString(<Handler data={data} />);
 }
+
 
 module.exports = {
   // sync will fetch all data *before* returning
@@ -53,29 +55,27 @@ module.exports = {
   async(routes, opts, cb) {
     opts = opts || {};
     var render = opts.render || renderToDocument;
-    var loc = typeof opts.location === 'undefined' ?
-      Router.HistoryLocation :
-      opts.location;
+    var loc = typeof opts.location === 'undefined' ? Router.HistoryLocation : opts.location;
 
     // cordova shouldn't use HistoryLocation
-    if (process.env.PLATFORM === 'ios' || process.env.PLATFORM === 'android')
+    if (process.env.PLATFORM === 'ios' || process.env.PLATFORM === 'android') {
       loc = null;
+    }
 
-    ReactDOM.render(<Router history={browserHistory} routes={routes} />, document.getElementById('app'));
+    match(
+      {routes, history: browserHistory},
+      (error, redirectLocation, renderProps) => {
+        render(renderProps);
+        fetchAllData(renderProps.routes, renderProps.params).then((data) => {
+          if (Object.keys(data).length) {
+            var out = render(renderProps);
+            if (cb) {
+              cb(out, data);
+            }
+          }
+        });
+      }
+    );
 
-    /*
-    Router.run(routes, loc, (Handler, state) => {
-      render(Handler, { state }, opts.context);
-      fetchAllData(state.routes, state.params).then(data => {
-        // only re-render if we fetched data
-        if (Object.keys(data).length) {
-          var out = render(Handler, { data }, opts.context);
-
-          if (cb)
-            cb(out, data);
-        }
-      });
-    });
-    */
   }
 };

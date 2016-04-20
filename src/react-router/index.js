@@ -6,12 +6,14 @@ function run(routes, opts, cb) {
   var generatedRoutes = routes(generator);
   opts = opts || {};
 
-  if (Env.CLIENT)
+  if (Env.CLIENT) {
     render.async(generatedRoutes, opts, cb);
-  else
+  } else {
     return function(opts, cb) {
       render.sync(generatedRoutes, opts, cb);
     };
+  }
+
 }
 
 // add mixins
