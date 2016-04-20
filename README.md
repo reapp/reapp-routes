@@ -84,7 +84,7 @@ function generate(props) {
 }
 ```
 
-Corresponing file tree, notice how `dir` affects nesting:
+Corresponding file tree. Notice how `dir` affects nesting:
 
 ```text
 /components
