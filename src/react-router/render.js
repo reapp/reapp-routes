@@ -1,15 +1,15 @@
 // uses react router to run an app, with two options (sync or async)
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, browserHistory, hashHistory, match, RouterContext } from 'react-router';
+import { Router, browserHistory, hashHistory, match, RouterContext, createRoutes } from 'react-router';
 import ReactDomServer from 'react-dom/server';
 
 // look at statics key "fetchData" on the Handler component to get data
 function fetchAllData(routes, params) {
   var promises = routes
-    .filter(route => route.handler.fetchData)
+    .filter(route => route.component.fetchData)
     .reduce((promises, route) => {
-      promises[route.name] = route.handler.fetchData(params);
+      promises[route.name] = route.component.fetchData(params);
       return promises;
     }, {});
 
@@ -62,6 +62,31 @@ module.exports = {
       loc = null;
     }
 
+    routes = createRoutes(routes);
+    match(
+      {routes, history: browserHistory},
+      (error, redirectLocation, renderProps) => {
+        ReactDOM.render(
+          <Router {...renderProps} />,
+          document.getElementById('app')
+        );
+        fetchAllData(renderProps.routes, renderProps.params).then((data) => {
+          if (Object.keys(data).length) {
+            var out = ReactDOM.render(
+              <Router {...renderProps} />,
+              document.getElementById('app')
+            );
+            if (cb) {
+              cb(out, data);
+            }
+          }
+
+        });
+      }
+    );
+
+
+    /*
     Router.run(routes, loc, (Handler, state) => {
       render(Handler, { state }, opts.context);
       fetchAllData(state.routes, state.params).then(data => {
@@ -74,6 +99,7 @@ module.exports = {
         }
       });
     });
+    */
 
   }
 };

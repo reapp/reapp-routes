@@ -23,6 +23,7 @@ module.exports = Object.assign({}, ParentRouteMixin, {
   },
 
   childRouteHandler(props) {
+    console.log('RoutedViewListMixin.childRouteHandler(props)');
     return this.createChildRouteHandler(props);
   },
 
@@ -38,7 +39,7 @@ module.exports = Object.assign({}, ParentRouteMixin, {
   },
 
   numActiveRoutes() {
-    return this.context.router.getCurrentRoutes().length;
+    return this.props.routes.length;
   },
 
   hasChildRoute() {
