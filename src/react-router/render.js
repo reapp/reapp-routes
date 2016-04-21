@@ -67,20 +67,21 @@ module.exports = {
       {routes, history: browserHistory},
       (error, redirectLocation, renderProps) => {
         ReactDOM.render(
-          <Router {...renderProps} />,
+          (<Router history={browserHistory} render={props => <RouterContext {...renderProps} />} >
+            {routes}
+          </Router>),
           document.getElementById('app')
         );
         fetchAllData(renderProps.routes, renderProps.params).then((data) => {
           if (Object.keys(data).length) {
             var out = ReactDOM.render(
-              <Router {...renderProps} />,
+              <Router history={browserHistory} render={props => <RouterContext {...renderProps} />} />,
               document.getElementById('app')
             );
             if (cb) {
               cb(out, data);
             }
           }
-
         });
       }
     );

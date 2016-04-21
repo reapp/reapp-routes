@@ -33,7 +33,8 @@ module.exports = {
   },
 
   _updateRouteComponent(component) {
-    this.context.router.setRouteComponentAtDepth(this.getRouteDepth(), component);
+    // this.context.router.setRouteComponentAtDepth(this.getRouteDepth(), component);
+    this.props.routes[this.getRouteDepth()].component = this.props.route.component;
   },
 
   getRouteDepth() {
