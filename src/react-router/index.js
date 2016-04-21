@@ -5,8 +5,7 @@ var Env = require('reapp-platform/src/Env');
 function run(routes, opts, cb) {
 
   // commenting out/resetting route generation since (testing) sending in an already-generated <Router> object
-  // var generatedRoutes = routes(generator);
-  const generatedRoutes = routes;
+  var generatedRoutes = routes(generator);
 
   opts = opts || {};
 

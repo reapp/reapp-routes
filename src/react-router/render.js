@@ -62,7 +62,7 @@ module.exports = {
       loc = null;
     }
 
-    routes = createRoutes(routes);
+    // routes = createRoutes(routes);
     match(
       {routes, history: browserHistory},
       (error, redirectLocation, renderProps) => {

@@ -1,4 +1,5 @@
 require('reapp-object-assign');
+import { createRoutes } from 'react-router';
 
 // reapp-routes is two helper functions that help your manage routes
 
@@ -71,16 +72,32 @@ function routes(generator, opts, requirer, route) {
 
   // we go through from top to bottom, to set the
   // parent path for the require's
+  console.log('makeTree route');
+  console.log(route);
   var routeTree = makeTree(route, defined(opts.dir) ? opts.dir + '/' : '');
 
+  console.log('routeTree');
+  console.log(routeTree);
+  console.log(createRoutes(routeTree));
+
   // then we go again from bottom to top to require
+  console.log('Before doing bottom to top require');
   return makeRoutes(routeTree);
+  console.log('After doing bottom to top require');
+
 }
 
 // once you've made your tree of routes, you'll want to do something
 // with them. This is a helper to recurse and call your generator
 function makeRoutes(route) {
-  route.children = route.children ? route.children.map(makeRoutes) : null;
+  if (Array.isArray(route)) {
+    route = route[0]
+  };
+  if (route.children) {
+    route.children = route.children.map(makeRoutes)
+  } else {
+    route.children = null
+  }
   return _generator(route, _requirer);
 }
 
@@ -89,15 +106,34 @@ function makeRoutes(route) {
 // and is used later to require components
 function makeTree(route, parentsPath) {
   var children;
+  console.log(`makeTree (${route.name})`)
 
-  if (route.children)
+  if (route.children) {
     children = route.children.map(child => {
+
+      console.log(`child of ${route.name}`);
+      console.log(child);
+
       var childSubDir = pick(route.dir, route.name);
+      console.log(`childSubDir = ${route.dir}, ${route.name}`);
+
       var childParentsPath = parentsPath + (childSubDir ? childSubDir + '/' : '');
+
+      console.log('returning makeTree(child, childParentsPath)');
+      console.log(child);
+      console.log(childParentsPath);
+
+      if (child.children) {
       return makeTree(child, childParentsPath);
+      }
+
     });
+  }
 
   var handlerPath = './' + parentsPath + proper(route.name);
+
+  console.log(`makeTree children (${route.name})`);
+  console.log(children);
 
   return {
     ...route,
