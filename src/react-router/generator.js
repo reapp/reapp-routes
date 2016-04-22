@@ -16,7 +16,11 @@ function generator(route, requirer) {
   if (route.default) {
     return <DefaultRoute {...route} />;
   }
-  return <Route children={route.children} {...route} />;
+  return (
+    <Route path={route.path} component={route.component}>
+      {route.children}
+    </Route>
+  );
 
 }
 
