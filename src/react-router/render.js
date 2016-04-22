@@ -53,6 +53,45 @@ module.exports = {
   // async will render *first* without data, then fetch data and re-render
   // ideal for running from the client
   async(routes, opts, cb) {
+
+    console.log('async routes; THIS IS WHAT YOU HAVE TO WORK WITH HERE')
+    console.log(routes);
+
+    const transformedRoutes = routes.map((routeItem) => {
+
+    });
+
+
+/*
+
+
+      // added code to formulate routes as desired (temp)
+      const routesTransformed = routeTree.map((routeTreeItem) => {
+        return {
+          path: routeTreeItem.path,
+          component: routeTreeItem.component,
+          name: routeTreeItem.name,
+          childRoutes: routeTreeItem.childRoutes && routeTreeItem.childRoutes.length > 0 ?
+            routeTreeItem.childRoutes.map((childRouteItem) => {
+              return {
+                path: childRouteItem.path,
+                component: childRouteItem.component,
+                name: childRouteItem.name,
+                childRoutes: childRouteItem.childRoutes && childRouteItem.childRoutes.length > 0 ?
+                  childRouteItem.childRoutes.map((childRouteItem2) => {
+                    return {
+                      path: childRouteItem2.path,
+                      component: childRouteItem2.component,
+                      name: childRouteItem2.name
+                    };
+                  }) : null
+              };
+            }) : null
+        };
+      });
+*/
+
+
     opts = opts || {};
     var render = opts.render || renderToDocument;
     var loc = typeof opts.location === 'undefined' ? Router.HistoryLocation : opts.location;
