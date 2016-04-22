@@ -24,20 +24,25 @@ var proper = name => name.split('-').map(capitalize).join('');
 function route(name, ...children) {
   var path, props, isRoute = true;
 
-  if (!children || !children.length)
+  if (!children || !children.length) {
     return { name, isRoute };
+  }
 
-  if (children[0].isRoute)
+  if (children[0].isRoute) {
     return { name, children, isRoute };
+  }
 
-  if (typeof children[0] === 'string')
+  if (typeof children[0] === 'string') {
     path = children.shift();
+  }
 
-  if (children[0] && !children[0].isRoute)
+  if (children[0] && !children[0].isRoute) {
     props = children.shift();
+  }
 
-  if (!children.length)
+  if (!children.length) {
     children = null;
+  }
 
   return Object.assign({ name, path, children, isRoute }, props);
 }
@@ -73,27 +78,40 @@ function routes(generator, opts, requirer, route) {
   // we go through from top to bottom, to set the
   // parent path for the require's
   var routeTree = makeTree(route, defined(opts.dir) ? opts.dir + '/' : '');
-  routeTree = createRoutes(routeTree);
-
-  console.log('routeTree');
-  console.log(routeTree);
 
   // then we go again from bottom to top to require
-  routeTree = makeRoutes(routeTree[0], _requirer);
+  routeTree = makeRoutes(routeTree, _requirer);
 
-  console.log('routeTree after makeRoutes');
-  console.log(routeTree);
-  console.log('createRoutes(routeTree) after makeRoutes');
+  // translate routes
+  routeTree = translateRoutes(routeTree);
+
+  console.log('translated routes to createRoutes');
   console.log(createRoutes(routeTree));
 
   return routeTree;
 
 }
 
+// once you have your generated routes, translate route to react-router 2.0.0 style
+// props with component references
+// the result of this function (from routes function above) goes to react-router/render.async(routes, opts, cb)
+function translateRoutes(route) {
+  let newRoute = {}
+  newRoute.path = route.path;
+  newRoute.component = route.component
+  if (route.children) {
+    newRoute.childRoutes = route.children.map((childItem) => {
+      return translateRoutes(childItem);
+    });
+  } else {
+    newRoute.childRoutes = null;
+  }
+  return newRoute;
+}
+
 // once you've made your tree of routes, you'll want to do something
 // with them. This is a helper to recurse and call your generator
 function makeRoutes(route, requirer) {
-
   let newRoute = {}
   newRoute.path = route.path || `/${route.name}`;
   newRoute.handlerPath = route.handlerPath;
@@ -105,19 +123,12 @@ function makeRoutes(route, requirer) {
   }
 
   if (route.children) {
-
     newRoute.children = route.children.map((childItem) => {
       return makeRoutes(childItem, requirer);
     });
-
-
-
   } else {
     newRoute.children = null
   }
-
-  console.log('makeRoutes newRoute');
-  console.log(newRoute);
 
   //return _generator(newRoute, _requirer);
 
@@ -130,16 +141,11 @@ function makeRoutes(route, requirer) {
 // and is used later to require components
 function makeTree(route, parentsPath) {
   var children;
-
   if (route.children) {
     children = route.children.map(child => {
-
       var childSubDir = pick(route.dir, route.name);
-
       var childParentsPath = parentsPath + (childSubDir ? childSubDir + '/' : '');
-
       return makeTree(child, childParentsPath);
-
     });
   }
 

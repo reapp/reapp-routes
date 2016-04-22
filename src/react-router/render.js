@@ -6,6 +6,7 @@ import ReactDomServer from 'react-dom/server';
 
 // look at statics key "fetchData" on the Handler component to get data
 function fetchAllData(routes, params) {
+  console.log('/react-router/render.fetchAllData(routes, params)');
   var promises = routes
     .filter(route => route.component.fetchData)
     .reduce((promises, route) => {
@@ -21,6 +22,7 @@ function fetchAllData(routes, params) {
 }
 
 function renderToDocument(Handler, props, context) {
+  console.log('/react-router/render.renderToDocument(Handler, props, context)');
   return ReactDOM.render(
     <Handler {...props} />,
     document.getElementById('app')
@@ -28,6 +30,7 @@ function renderToDocument(Handler, props, context) {
 }
 
 function renderToString(Handler, data) {
+  console.log('/react-router/render.renderToString(Handler, data)');
   return React.renderToString(<Handler data={data} />);
 }
 
@@ -36,6 +39,7 @@ module.exports = {
   // sync will fetch all data *before* returning
   // ideal for running from server
   sync(routes, opts, cb) {
+    console.log('/react-router/render.sync(routes, opts, cb)');
     opts = opts || {};
     var render = opts.render || renderToString;
     var loc = opts.location || Router.HistoryLocation;
@@ -54,43 +58,7 @@ module.exports = {
   // ideal for running from the client
   async(routes, opts, cb) {
 
-    console.log('async routes; THIS IS WHAT YOU HAVE TO WORK WITH HERE')
-    console.log(routes);
-
-    const transformedRoutes = routes.map((routeItem) => {
-
-    });
-
-
-/*
-
-
-      // added code to formulate routes as desired (temp)
-      const routesTransformed = routeTree.map((routeTreeItem) => {
-        return {
-          path: routeTreeItem.path,
-          component: routeTreeItem.component,
-          name: routeTreeItem.name,
-          childRoutes: routeTreeItem.childRoutes && routeTreeItem.childRoutes.length > 0 ?
-            routeTreeItem.childRoutes.map((childRouteItem) => {
-              return {
-                path: childRouteItem.path,
-                component: childRouteItem.component,
-                name: childRouteItem.name,
-                childRoutes: childRouteItem.childRoutes && childRouteItem.childRoutes.length > 0 ?
-                  childRouteItem.childRoutes.map((childRouteItem2) => {
-                    return {
-                      path: childRouteItem2.path,
-                      component: childRouteItem2.component,
-                      name: childRouteItem2.name
-                    };
-                  }) : null
-              };
-            }) : null
-        };
-      });
-*/
-
+    console.log('react-router/render.async(routes, opts, cb)');
 
     opts = opts || {};
     var render = opts.render || renderToDocument;
@@ -101,45 +69,15 @@ module.exports = {
       loc = null;
     }
 
-    // routes = createRoutes(routes);
     match(
       {routes, history: browserHistory},
       (error, redirectLocation, renderProps) => {
         ReactDOM.render(
-          (<Router history={browserHistory} render={props => <RouterContext {...renderProps} />} >
-            {routes}
-          </Router>),
+          (<Router routes={routes} history={browserHistory} {...renderProps} />),
           document.getElementById('app')
         );
-        fetchAllData(renderProps.routes, renderProps.params).then((data) => {
-          if (Object.keys(data).length) {
-            var out = ReactDOM.render(
-              <Router history={browserHistory} render={props => <RouterContext {...renderProps} />} />,
-              document.getElementById('app')
-            );
-            if (cb) {
-              cb(out, data);
-            }
-          }
-        });
       }
     );
-
-
-    /*
-    Router.run(routes, loc, (Handler, state) => {
-      render(Handler, { state }, opts.context);
-      fetchAllData(state.routes, state.params).then(data => {
-        // only re-render if we fetched data
-        if (Object.keys(data).length) {
-          var out = render(Handler, { data }, opts.context);
-          if (cb) {
-            cb(out, data);
-          }
-        }
-      });
-    });
-    */
 
   }
 };

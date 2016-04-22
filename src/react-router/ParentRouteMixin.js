@@ -42,7 +42,6 @@ module.exports = {
   },
 
   createChildRouteHandler(props) {
-    console.log('ParentRouteMixin.createChildRouteHandler(props)');
     var route = this.context.router.getRouteAtDepth(this.getRouteDepth());
     var el = route ? React.createElement(route.handler, assign({}, props || this.props, { ref: REF_NAME })) : null;
     return el;
