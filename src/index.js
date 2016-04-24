@@ -58,7 +58,6 @@ var _requirer, _generator;
  */
 function routes(generator, opts, requirer, route) {
   // todo: having this tied to dir creation is bad coupling
-
   // opts is optional, shift if necessary
   if (!route) {
     route = requirer;
@@ -83,12 +82,13 @@ function routes(generator, opts, requirer, route) {
   routeTree = makeRoutes(routeTree, _requirer);
 
   // translate routes
-  routeTree = translateRoutes(routeTree);
+  //routeTree = translateRoutes(routeTree);
 
-  console.log('translated routes to createRoutes');
-  console.log(createRoutes(routeTree));
+  //console.log('translated routes to createRoutes');
+  //console.log(createRoutes(routeTree));
 
   return routeTree;
+
 
 }
 
@@ -116,12 +116,6 @@ function makeRoutes(route, requirer) {
   newRoute.path = route.path || `/${route.name}`;
   newRoute.handlerPath = route.handlerPath;
 
-  if (!route.component) {
-    newRoute.component = requirer(route.handlerPath);
-  } else {
-    newRoute.component = route.component;
-  }
-
   if (route.children) {
     newRoute.children = route.children.map((childItem) => {
       return makeRoutes(childItem, requirer);
@@ -130,9 +124,7 @@ function makeRoutes(route, requirer) {
     newRoute.children = null
   }
 
-  //return _generator(newRoute, _requirer);
-
-  return newRoute;
+  return _generator(newRoute, requirer);
 
 }
 

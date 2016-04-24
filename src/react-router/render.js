@@ -59,6 +59,7 @@ module.exports = {
   async(routes, opts, cb) {
 
     console.log('react-router/render.async(routes, opts, cb)');
+    console.log(createRoutes(routes));
 
     opts = opts || {};
     var render = opts.render || renderToDocument;
@@ -73,7 +74,9 @@ module.exports = {
       {routes, history: browserHistory},
       (error, redirectLocation, renderProps) => {
         ReactDOM.render(
-          (<Router routes={routes} history={browserHistory} {...renderProps} />),
+          (<Router history={browserHistory}>
+            {routes}
+          </Router>),
           document.getElementById('app')
         );
       }

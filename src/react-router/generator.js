@@ -9,25 +9,20 @@ var { Route, DefaultRoute } = require('react-router');
 // here our generator maps our route tree to react-router routes.
 
 function generator(route, requirer) {
-  console.log('/react-router.generator(route, requirer)');
+
   if (!route.component) {
     route.component = requirer(route.handlerPath);
+  } else {
+    route.component = null
   }
 
-  if (route.default) {
-    return <DefaultRoute {...route} />;
-  }
   return (
-    <Route path={route.path} component={route.component}>
-      {route.children}
-    </Route>
+    <Route {...route} />
   );
-
 }
 
 module.exports = {
   route,
-
   // we are just currying the first argument
   // of routes to be this generator
   routes: routes.bind(null, generator)

@@ -7,7 +7,7 @@ module.exports = {
 
   contextTypes: {
     routeDepth: React.PropTypes.number.isRequired,
-    router: React.PropTypes.func.isRequired
+    router: React.PropTypes.object.isRequired
   },
 
   childContextTypes: {
