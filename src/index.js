@@ -87,6 +87,9 @@ function routes(generator, opts, requirer, route) {
   //console.log('translated routes to createRoutes');
   //console.log(createRoutes(routeTree));
 
+  console.log('route tre after make routes');
+  console.log(routeTree);
+
   return routeTree;
 
 
@@ -111,20 +114,20 @@ function translateRoutes(route) {
 
 // once you've made your tree of routes, you'll want to do something
 // with them. This is a helper to recurse and call your generator
-function makeRoutes(route, requirer) {
+function makeRoutes(route, requirer, parentRoute) {
   let newRoute = {}
   newRoute.path = route.path || `/${route.name}`;
   newRoute.handlerPath = route.handlerPath;
-
+  newRoute.parent = parentRoute || null;
   if (route.children) {
     newRoute.children = route.children.map((childItem) => {
-      return makeRoutes(childItem, requirer);
+      return makeRoutes(childItem, requirer, route);
     });
   } else {
     newRoute.children = null
   }
 
-  return _generator(newRoute, requirer);
+  return _generator(newRoute, requirer, parentRoute);
 
 }
 
