@@ -16,7 +16,7 @@
   "dependencies": {
     "react": "0.14.x",
     "react-dom": "^0.14.0",
-    "reapp-platform": "https://github.com/reapp/reapp-platform.git",
+    "reapp-platform": "*",
     "react-router": "0.13.x",
     "reapp-object-assign": "^1.0.0"
   },
