@@ -9,19 +9,12 @@ var { Route, IndexRoute } = require('react-router');
 // here our generator maps our route tree to react-router routes.
 
 function generator(route, requirer, parentRoute) {
-
-  console.log('generator route and ParentRoute');
-  console.log(route);
-  console.log(parentRoute);
-
   if (!route.component) {
     route.component = requirer(route.handlerPath);
   } else {
     route.component = null
   }
-
-
-
+  // determine if route has an index route
   if (route.children && route.children[0] && route.children[0].props.path === '/' && route.path === '/') {
     route.indexRoute = {
       component: route.children[0].props.component

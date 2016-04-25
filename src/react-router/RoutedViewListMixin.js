@@ -29,10 +29,10 @@ module.exports = Object.assign({}, ParentRouteMixin, {
   // todo: debug why this is called more than it should be
   _handleViewEntered(i) {
     if (i === 0 && this.numActiveRoutes() > this.getRouteDepth()) {
-      var r = this.context.router.getCurrentRoutes().reverse();
+      var r = this.props.routes.reverse();
       r.shift();
       setTimeout(() => {
-        this.context.router.transitionTo(r[0].path)
+        this.context.router.push(r[0].path)
       });
     }
   },
@@ -46,7 +46,7 @@ module.exports = Object.assign({}, ParentRouteMixin, {
   },
 
   subRouteKey() {
-    return this.context.router.getCurrentRoutes().reverse()[0].name
+    return this.props.routes.reverse()[0].name
       + this.context.router.getCurrentParams().id;
   }
 });

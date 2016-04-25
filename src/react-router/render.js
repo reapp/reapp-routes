@@ -6,7 +6,6 @@ import ReactDomServer from 'react-dom/server';
 
 // look at statics key "fetchData" on the Handler component to get data
 function fetchAllData(routes, params) {
-  console.log('/react-router/render.fetchAllData(routes, params)');
   var promises = routes
     .filter(route => route.component.fetchData)
     .reduce((promises, route) => {
@@ -22,7 +21,6 @@ function fetchAllData(routes, params) {
 }
 
 function renderToDocument(Handler, props, context) {
-  console.log('/react-router/render.renderToDocument(Handler, props, context)');
   return ReactDOM.render(
     <Handler {...props} />,
     document.getElementById('app')
@@ -30,7 +28,6 @@ function renderToDocument(Handler, props, context) {
 }
 
 function renderToString(Handler, data) {
-  console.log('/react-router/render.renderToString(Handler, data)');
   return React.renderToString(<Handler data={data} />);
 }
 
@@ -39,7 +36,6 @@ module.exports = {
   // sync will fetch all data *before* returning
   // ideal for running from server
   sync(routes, opts, cb) {
-    console.log('/react-router/render.sync(routes, opts, cb)');
     opts = opts || {};
     var render = opts.render || renderToString;
     var loc = opts.location || Router.HistoryLocation;
@@ -57,10 +53,6 @@ module.exports = {
   // async will render *first* without data, then fetch data and re-render
   // ideal for running from the client
   async(routes, opts, cb) {
-
-    console.log('react-router/render.async(routes, opts, cb)');
-    console.log(createRoutes(routes));
-
     opts = opts || {};
     var render = opts.render || renderToDocument;
     var loc = typeof opts.location === 'undefined' ? Router.HistoryLocation : opts.location;

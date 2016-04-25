@@ -81,35 +81,8 @@ function routes(generator, opts, requirer, route) {
   // then we go again from bottom to top to require
   routeTree = makeRoutes(routeTree, _requirer);
 
-  // translate routes
-  //routeTree = translateRoutes(routeTree);
-
-  //console.log('translated routes to createRoutes');
-  //console.log(createRoutes(routeTree));
-
-  console.log('route tre after make routes');
-  console.log(routeTree);
-
   return routeTree;
 
-
-}
-
-// once you have your generated routes, translate route to react-router 2.0.0 style
-// props with component references
-// the result of this function (from routes function above) goes to react-router/render.async(routes, opts, cb)
-function translateRoutes(route) {
-  let newRoute = {}
-  newRoute.path = route.path;
-  newRoute.component = route.component
-  if (route.children) {
-    newRoute.childRoutes = route.children.map((childItem) => {
-      return translateRoutes(childItem);
-    });
-  } else {
-    newRoute.childRoutes = null;
-  }
-  return newRoute;
 }
 
 // once you've made your tree of routes, you'll want to do something

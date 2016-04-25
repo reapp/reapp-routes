@@ -3,8 +3,7 @@ var render = require('./render');
 var Env = require('reapp-platform/src/Env');
 
 function run(routes, opts, cb) {
-  console.log('/react-router/index.run(routes, opts, cb)');
-  // commenting out/resetting route generation since (testing) sending in an already-generated <Router> object
+
   var generatedRoutes = routes(generator);
 
   opts = opts || {};
