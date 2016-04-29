@@ -15,8 +15,13 @@ module.exports = {
   },
 
   getChildContext() {
+    let routeDepth = 1;
+    if (this.context.routeDepth) {
+      routeDepth = this.context.routeDepth;
+      routeDepth = routeDepth + 1;
+    }
     return {
-      routeDepth: this.context.routeDepth + 1
+      routeDepth
     };
   },
 
@@ -33,17 +38,21 @@ module.exports = {
   },
 
   _updateRouteComponent(component) {
-    // this.context.router.setRouteComponentAtDepth(this.getRouteDepth(), component);
-    this.props.routes[this.getRouteDepth()].component = this.props.route.component;
+    if (this.props.routes[this.getRouteDepth]) {
+      this.props.routes[this.getRouteDepth].component = component;
+    }
   },
 
   getRouteDepth() {
-    return this.context.routeDepth;
+    if (this.context.routeDepth) {
+      return this.context.routeDepth;
+    }
+    return 1;
   },
 
   createChildRouteHandler(props) {
-    var route = this.context.router.getRouteAtDepth(this.getRouteDepth());
-    var el = route ? React.createElement(route.handler, assign({}, props || this.props, { ref: REF_NAME })) : null;
+    var route = this.props.routes[this.getRouteDepth()];
+    var el = route ? React.createElement(route.component, assign({}, props, this.props, { ref: REF_NAME })) : null;
     return el;
   }
 

@@ -54,14 +54,6 @@ module.exports = {
   // ideal for running from the client
   async(routes, opts, cb) {
     opts = opts || {};
-    var render = opts.render || renderToDocument;
-    var loc = typeof opts.location === 'undefined' ? Router.HistoryLocation : opts.location;
-
-    // cordova shouldn't use HistoryLocation
-    if (process.env.PLATFORM === 'ios' || process.env.PLATFORM === 'android') {
-      loc = null;
-    }
-
     match(
       {routes, history: browserHistory},
       (error, redirectLocation, renderProps) => {
