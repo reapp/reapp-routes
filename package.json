@@ -21,9 +21,9 @@
     "reapp-object-assign": "^1.0.0"
   },
   "bugs": {
-    "url": "https://github.com/reapp/reapp-route-tree/issues"
+    "url": "https://github.com/reapp/reapp-routes/issues"
   },
-  "homepage": "https://github.com/reapp/reapp-route-tree",
+  "homepage": "https://github.com/reapp/reapp-routes",
   "devDependencies": {
     "babel": "^5.0.0"
   }
