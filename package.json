@@ -14,10 +14,10 @@
   "author": "Nate Wienert",
   "license": "MIT",
   "dependencies": {
-    "react": "0.14.x",
+    "react": "^15.1.0",
     "react-dom": "0.14.x",
     "reapp-platform": "git+https://github.com/reapp/reapp-platform.git",
-    "react-router": "2.0.0",
+    "react-router": "2.4.1",
     "reapp-object-assign": "^1.0.0"
   },
   "bugs": {

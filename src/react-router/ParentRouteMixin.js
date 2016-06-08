@@ -1,5 +1,4 @@
 var React = require('react');
-var assign = require('react/lib/Object.assign');
 
 var REF_NAME = '__routeHandler__';
 
@@ -52,7 +51,7 @@ module.exports = {
 
   createChildRouteHandler(props) {
     var route = this.props.routes[this.getRouteDepth()];
-    var el = route ? React.createElement(route.component, assign({}, props, this.props, { ref: REF_NAME })) : null;
+    var el = route ? React.createElement(route.component, Object.assign({}, props, this.props, { ref: REF_NAME })) : null;
     return el;
   }
 
